@@ -1,14 +1,19 @@
 plugins {
     id 'java-library'
     id 'io.qameta.allure' version '2.10.0'
+    id "io.freefair.lombok" version "6.5.1"
 }
 
 repositories {
     mavenCentral()
 }
 
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
 def allureVersion = "2.19.0",
-    slf4jVersion = "1.7.32"
+    slf4jVersion = "1.7.36"
 
 allure {
     report {
@@ -26,14 +31,18 @@ allure {
 
 dependencies {
     testImplementation(
-            "com.codeborne:selenide:6.11.2",
+            "com.codeborne:selenide:6.12.0",
             "io.qameta.allure:allure-selenide:$allureVersion",
             "io.rest-assured:rest-assured:5.3.0",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
 //            "io.appium:java-client:7.0.0",
             "io.appium:java-client:8.3.0",
+            "org.aeonbits.owner:owner:1.0.12",
             "org.junit.jupiter:junit-jupiter:5.9.2",
-            "org.slf4j:slf4j-simple:$slf4jVersion"
+            "org.slf4j:slf4j-simple:$slf4jVersion",
+            "org.aspectj:aspectjrt:1.9.8",
+            "org.aspectj:aspectjweaver:1.9.8",
+            "commons-io:commons-io:2.11.0"
     )
 }
 
@@ -48,3 +57,15 @@ tasks.withType(Test) {
         }
     }
 }
+task android_tests(type: Test) {
+    useJUnitPlatform{
+        includeTags("android")
+    }
+}
+
+task ios_tests(type: Test) {
+    useJUnitPlatform{
+        includeTags("ios")
+    }
+}
+
