@@ -14,6 +14,16 @@ import java.net.URL;
 
 public class BrowserstackMobileDriver implements WebDriverProvider {
 
+
+    public static URL getAppiumServerUrk() {
+        try {
+            return new URL("http://hub.browserstack.com/wd/hub");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
@@ -48,11 +58,7 @@ public class BrowserstackMobileDriver implements WebDriverProvider {
         mutableCapabilities.setCapability("build", build);
         mutableCapabilities.setCapability("name", name);
 
-        try {
-            return new RemoteWebDriver(
-                    new URL("http://hub.browserstack.com/wd/hub"), mutableCapabilities);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        return new RemoteWebDriver(getAppiumServerUrk(), mutableCapabilities);
+
     }
 }
