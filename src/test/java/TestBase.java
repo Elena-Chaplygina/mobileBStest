@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import drivers.BrowserstackMobileDriver;
 import drivers.LocalMobileDriver;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
-import static io.restassured.RestAssured.sessionId;
 
 public class TestBase {
     public static String env = System.getProperty("env");
@@ -36,11 +36,11 @@ public class TestBase {
 
     @AfterEach
     void afterEach() {
-
+        String sessionId = Selenide.sessionId().toString();
         Attach.pageSource();
 
         closeWebDriver();
-        if (env.equals("bs")) {
+        if (env.equals("browserstack")) {
             Attach.addVideo(sessionId);
 
         }
