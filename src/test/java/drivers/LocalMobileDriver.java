@@ -1,8 +1,10 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.MobileDriverConfig;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 
@@ -19,6 +21,7 @@ import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
 
 public class LocalMobileDriver implements WebDriverProvider {
 
+    public static MobileDriverConfig config = ConfigFactory.create(MobileDriverConfig.class, System.getProperties());
 
     public static URL getAppiumServerUrl() {
         try {
@@ -32,30 +35,17 @@ public class LocalMobileDriver implements WebDriverProvider {
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
-//        MobileDriverConfig config =
-//                ConfigFactory.create(MobileDriverConfig.class, System.getProperties());
-//
-//        String user = config.getUser();
-//        String password = config.getPassword();
-//        String app = config.getApp();
-//        String device = config.getDevice();
-//        String version = config.getOsVersion();
-//        String project = config.getProject();
-//        String build = config.getBuild();
-//        String name = config.getName();
 
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
 
         options.setAutomationName(ANDROID_UIAUTOMATOR2)
                 .setPlatformName(ANDROID)
-                .setDeviceName("27948/60W302299")
-                .setPlatformVersion("12.0")
-//                .setDeviceName("Pixel 4 API 30")
-//                .setPlatformVersion("11.0")
+                .setDeviceName(config.deviceName())
+                .setPlatformVersion(config.getOsVersion())
                 .setApp(getAppPath())
-                .setAppPackage("org.wikipedia.alpha")
-                .setAppActivity("org.wikipedia.main.MainActivity");
+                .setAppPackage(config.appPackage())
+                .setAppActivity(config.appActivity());
 
 
         return new AndroidDriver(getAppiumServerUrl(), options);

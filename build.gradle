@@ -57,15 +57,15 @@ tasks.withType(Test) {
         }
     }
 }
-task android_tests(type: Test) {
-    useJUnitPlatform{
-        includeTags("android")
+task emulation_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("emulation")
     }
 }
 
-task ios_tests(type: Test) {
-    useJUnitPlatform{
-        includeTags("ios")
+task browserstack_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("browserstack")
     }
 }
 

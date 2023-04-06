@@ -14,7 +14,6 @@ import java.net.URL;
 
 public class BrowserstackMobileDriver implements WebDriverProvider {
 
-
     public static URL getAppiumServerUrk() {
         try {
             return new URL("http://hub.browserstack.com/wd/hub");

@@ -33,7 +33,12 @@ public interface MobileDriverConfig extends Config {
     @Key("name")
     String getName();
 
-    @Key("remoteUrl")
-    String getRemoteURL();
+    @Key("deviceName")
+    String deviceName();
+    @Key("appPackage")
+    String appPackage();
+    @Key("appActivity")
+    String appActivity();
+
 
 }
